@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/Cellar/node/8.2.1/bin/node /usr/local/bin/yarn test -- --watch
+  /usr/local/Cellar/node/8.2.1/bin/node /usr/local/bin/yarn run dev-server
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:/Library/Frameworks/Mono.framework/Versions/Current/Commands
@@ -22,7 +22,8 @@ npm manifest:
     "license": "MIT",
     "scripts": {
       "serve": "live-server public/",
-      "build": "webpack",
+      "build:dev": "webpack",
+      "build:prod": "webpack -p --env production",
       "test": "jest --config=jest.config.json"
     },
     "dependencies": {
@@ -34,8 +35,10 @@ npm manifest:
       "babel-preset-env": "1.5.2",
       "babel-preset-react": "6.24.1",
       "css-loader": "0.28.4",
-      "enzyme": "3.0.0",
-      "enzyme-adapter-react-16": "1.0.0",
+      "enzyme": "3.1.0",
+      "enzyme-adapter-react-16": "1.0.2",
+      "enzyme-to-json": "3.1.4",
+      "extract-text-webpack-plugin": "3.0.0",
       "jest": "20.0.4",
       "live-server": "^1.2.0",
       "moment": "2.18.1",
@@ -334,7 +337,7 @@ Lockfile:
     version "1.5.2"
     resolved "https://registry.yarnpkg.com/async/-/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
   
-  async@^2.1.2, async@^2.1.4, async@^2.1.5:
+  async@^2.1.2, async@^2.1.4, async@^2.1.5, async@^2.4.1:
     version "2.6.0"
     resolved "https://registry.yarnpkg.com/async/-/async-2.6.0.tgz#61a29abb6fcc026fea77e56d1c6ec53a795951f4"
     dependencies:
@@ -2092,15 +2095,16 @@ Lockfile:
     version "1.1.1"
     resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.1.tgz#6e5c2d0a5621b5dadaecef80b90edfb5cd7772f0"
   
-  enzyme-adapter-react-16@1.0.0:
-    version "1.0.0"
-    resolved "https://registry.yarnpkg.com/enzyme-adapter-react-16/-/enzyme-adapter-react-16-1.0.0.tgz#e7edd5536743818dcbef336d40d7da59b3a7db8e"
+  enzyme-adapter-react-16@1.0.2:
+    version "1.0.2"
+    resolved "https://registry.yarnpkg.com/enzyme-adapter-react-16/-/enzyme-adapter-react-16-1.0.2.tgz#8c6f431f17c69e1e9eeb25ca4bd92f31971eb2dd"
     dependencies:
       enzyme-adapter-utils "^1.0.0"
       lodash "^4.17.4"
       object.assign "^4.0.4"
       object.values "^1.0.4"
       prop-types "^15.5.10"
+      react-test-renderer "^16.0.0-0"
   
   enzyme-adapter-utils@^1.0.0:
     version "1.3.0"
@@ -2110,9 +2114,15 @@ Lockfile:
       object.assign "^4.0.4"
       prop-types "^15.6.0"
   
-  enzyme@3.0.0:
-    version "3.0.0"
-    resolved "https://registry.yarnpkg.com/enzyme/-/enzyme-3.0.0.tgz#94ce364254dc654c4e619b25eecc644bf6481de7"
+  enzyme-to-json@3.1.4:
+    version "3.1.4"
+    resolved "https://registry.yarnpkg.com/enzyme-to-json/-/enzyme-to-json-3.1.4.tgz#a4a85a8f7b561cb8c9c0d728ad1b619a3fed7df2"
+    dependencies:
+      lodash "^4.17.4"
+  
+  enzyme@3.1.0:
+    version "3.1.0"
+    resolved "https://registry.yarnpkg.com/enzyme/-/enzyme-3.1.0.tgz#d8ca84085790fbcec6ed40badd14478faee4c25a"
     dependencies:
       cheerio "^1.0.0-rc.2"
       function.prototype.name "^1.0.3"
@@ -2123,7 +2133,7 @@ Lockfile:
       object.entries "^1.0.4"
       object.values "^1.0.4"
       raf "^3.3.2"
-      rst-selector-parser "^2.2.1"
+      rst-selector-parser "^2.2.2"
   
   errno@^0.1.3, errno@~0.1.7:
     version "0.1.7"
@@ -2410,6 +2420,15 @@ Lockfile:
       regex-not "^1.0.0"
       snapdragon "^0.8.1"
       to-regex "^3.0.1"
+  
+  extract-text-webpack-plugin@3.0.0:
+    version "3.0.0"
+    resolved "https://registry.yarnpkg.com/extract-text-webpack-plugin/-/extract-text-webpack-plugin-3.0.0.tgz#90caa7907bc449f335005e3ac7532b41b00de612"
+    dependencies:
+      async "^2.4.1"
+      loader-utils "^1.1.0"
+      schema-utils "^0.3.0"
+      webpack-sources "^1.0.1"
   
   extsprintf@1.3.0:
     version "1.3.0"
@@ -5210,6 +5229,10 @@ Lockfile:
       object-assign "^4.1.1"
       prop-types "^15.6.0"
   
+  react-is@^16.3.0:
+    version "16.3.0"
+    resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.3.0.tgz#f0e8bfd8c09b480dd610b8639d9ed65c13601224"
+  
   react-modal@2.2.2:
     version "2.2.2"
     resolved "https://registry.yarnpkg.com/react-modal/-/react-modal-2.2.2.tgz#4bbf98bc506e61c446c9f57329c7a488ea7d504b"
@@ -5271,6 +5294,15 @@ Lockfile:
     dependencies:
       fbjs "^0.8.16"
       object-assign "^4.1.1"
+  
+  react-test-renderer@^16.0.0-0:
+    version "16.3.0"
+    resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.3.0.tgz#7e88d8cb4c2b95c161b6c6c998991166f74d473e"
+    dependencies:
+      fbjs "^0.8.16"
+      object-assign "^4.1.1"
+      prop-types "^15.6.0"
+      react-is "^16.3.0"
   
   react@16.0.0:
     version "16.0.0"
@@ -5531,7 +5563,7 @@ Lockfile:
       hash-base "^2.0.0"
       inherits "^2.0.1"
   
-  rst-selector-parser@^2.2.1:
+  rst-selector-parser@^2.2.2:
     version "2.2.3"
     resolved "https://registry.yarnpkg.com/rst-selector-parser/-/rst-selector-parser-2.2.3.tgz#81b230ea2fcc6066c89e3472de794285d9b03d91"
     dependencies:
@@ -6628,17 +6660,14 @@ Lockfile:
       window-size "0.1.0"
 
 Trace: 
-  Error: Command failed.
-  Exit code: 1
-  Command: sh
-  Arguments: -c jest --config=jest.config.json --watch
-  Directory: /Users/user/Desktop/School Stuff/React/React-Course-3/expensify-app
-  Output:
-  
-      at ProcessTermError.MessageError (/usr/local/lib/node_modules/yarn/lib/cli.js:186:110)
-      at new ProcessTermError (/usr/local/lib/node_modules/yarn/lib/cli.js:226:113)
-      at ChildProcess.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:30281:17)
-      at emitTwo (events.js:125:13)
-      at ChildProcess.emit (events.js:213:7)
-      at maybeClose (internal/child_process.js:921:16)
-      at Process.ChildProcess._handle.onexit (internal/child_process.js:211:5)
+  Error: Command "dev-server" not found.
+      at new MessageError (/usr/local/lib/node_modules/yarn/lib/cli.js:186:110)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:87307:17
+      at Generator.next (<anonymous>)
+      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:98:30)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:116:14
+      at Promise (<anonymous>)
+      at F (/usr/local/lib/node_modules/yarn/lib/cli.js:23451:28)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:95:12
+      at runCommand (/usr/local/lib/node_modules/yarn/lib/cli.js:87312:22)
+      at Object.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:87412:14)
