@@ -11,9 +11,9 @@ Expensify app is a simple web application that allows the user to organize their
 > ENJOY
 ```
 
-### Tech used:
-React.js
-Redux
-SCSS
-Webpack
-Yarn
+## Tech used:
+* React.js
+* Redux
+* SCSS
+* Webpack
+* Yarn
